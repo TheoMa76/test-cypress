@@ -1,7 +1,7 @@
-// src/components/pages/PokemonPage.tsx
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import PokemonCardGrid from "../molecules/Containers/PokemonCardGrid";
 import { fetchPokemonCards } from "../../api/pokemon";
+import Input from "../atoms/Inputs/Input";
 
 interface PokemonCard {
   id: string;
@@ -13,6 +13,7 @@ const PokemonPage: React.FC = () => {
   const [cards, setCards] = useState<PokemonCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     const loadCards = async () => {
@@ -34,6 +35,33 @@ const PokemonPage: React.FC = () => {
     loadCards();
   }, []);
 
+  const search = async (e: FormEvent) => {
+    e.preventDefault();
+    console.log("Recherche en cours... avec ", query);
+    if (query) {
+      try {
+        const data = await fetchPokemonCards(query);
+        const formattedCards = data.cards.map((card: any) => ({
+          id: card.id,
+          name: card.name,
+          image: card.image,
+        }));
+        setCards(formattedCards);
+
+      } catch (err: any) {
+        setError(err.message || "Erreur lors de la recherche.");
+      }
+    } else {
+      const data = await fetchPokemonCards();
+      const formattedCards = data.cards.map((card: any) => ({
+        id: card.id,
+        name: card.name,
+        image: card.image,
+      }));
+      setCards(formattedCards);
+    }
+  };
+
   if (loading) {
     return <div>Chargement en cours...</div>;
   }
@@ -45,6 +73,15 @@ const PokemonPage: React.FC = () => {
   return (
     <div>
       <h1>Liste des cartes Pokémon</h1>
+      <div>
+      <Input
+        onChange={(e) => setQuery(e.target.value)}
+        ide="search-input"
+        placeholder="Rechercher..."
+        value={query} 
+        onSubmit={search}
+      />
+      </div>
       <PokemonCardGrid cards={cards} />
     </div>
   );

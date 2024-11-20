@@ -12,7 +12,7 @@ interface SimplifiedPokemonCard {
     cards: SimplifiedPokemonCard[];
   }
   
-  export async function fetchPokemonCards(): Promise<PokemonApiResponse> {
+  export async function fetchPokemonCards(findName = ""): Promise<PokemonApiResponse> {
     const apiUrl = import.meta.env.VITE_API_URL;
     const apiKey = import.meta.env.VITE_API_KEY;
     const pageSize = import.meta.env.VITE_API_LIMIT ?? 10;
@@ -22,6 +22,9 @@ interface SimplifiedPokemonCard {
     }
   
     const url = new URL(`${apiUrl}/v2/cards`);
+    if(findName != ""){
+      url.searchParams.append('q', `name:${findName}`);
+    }
     url.searchParams.append('pageSize', pageSize.toString());
   
     const response = await fetch(url.toString(), {

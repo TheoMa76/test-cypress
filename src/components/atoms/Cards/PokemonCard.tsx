@@ -7,11 +7,9 @@ interface PokemonCardProps {
 }
 
 const PokemonCard: React.FC<PokemonCardProps> = ({ id, name, image }) => {
-    console.log(id,name,image);
   return (
     <div style={styles.card} key={id}>
-      <img src={image} alt={name} style={styles.image} />
-      <h3 style={styles.title}>{name}</h3>
+      <img src={image} alt={name} />
     </div>
   );
 };

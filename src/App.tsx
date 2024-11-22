@@ -1,12 +1,11 @@
-import PokemonPage from './components/pages/PokemonPage'
+import PokemonPage from "./components/pages/PokemonPage";
 
 function App() {
   return (
     <>
-      <PokemonPage>
-      </PokemonPage>
+      <PokemonPage></PokemonPage>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

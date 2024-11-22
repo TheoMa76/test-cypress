@@ -13,7 +13,12 @@ const PokemonCardGrid: React.FC<PokemonCardGridProps> = ({ cards }) => {
   return (
     <div style={styles.grid}>
       {cards.map((card) => (
-        <PokemonCard key={card.id} id={card.id} name={card.name} image={card.image} />
+        <PokemonCard
+          key={card.id}
+          id={card.id}
+          name={card.name}
+          image={card.image}
+        />
       ))}
     </div>
   );

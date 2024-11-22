@@ -1,17 +1,16 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-top: 16px;
-    color: #333;
-  }
-  
-  div {
-    color: #333;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 16px;
+  color: #333;
+}
+
+div {
+  color: #333;
+}

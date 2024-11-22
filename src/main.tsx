@@ -11,5 +11,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/" element={<PokemonPage />} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

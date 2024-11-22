@@ -1,0 +1,22 @@
+name: Exercice 1
+
+on: 
+  push:
+    branches:
+      - '**'
+
+jobs:
+  display-message:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name : installation node
+      uses: actions/setup-node@v2
+      with:
+        node-version: 'latest'
+
+    - name: Affiche un message
+      run: echo "A push event has been triggered!"

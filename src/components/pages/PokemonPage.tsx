@@ -26,7 +26,10 @@ const PokemonPage: React.FC = () => {
         }));
         setCards(formattedCards);
       } catch (err: any) {
-        setError(err.message || "Une erreur est survenue lors de la récupération des cartes.");
+        setError(
+          err.message ||
+            "Une erreur est survenue lors de la récupération des cartes.",
+        );
       } finally {
         setLoading(false);
       }
@@ -47,7 +50,6 @@ const PokemonPage: React.FC = () => {
           image: card.image,
         }));
         setCards(formattedCards);
-
       } catch (err: any) {
         setError(err.message || "Erreur lors de la recherche.");
       }
@@ -74,13 +76,13 @@ const PokemonPage: React.FC = () => {
     <div>
       <h1>Liste des cartes Pokémon</h1>
       <div>
-      <Input
-        onChange={(e) => setQuery(e.target.value)}
-        ide="search-input"
-        placeholder="Rechercher..."
-        value={query} 
-        onSubmit={search}
-      />
+        <Input
+          onChange={(e) => setQuery(e.target.value)}
+          ide="search-input"
+          placeholder="Rechercher..."
+          value={query}
+          onSubmit={search}
+        />
       </div>
       <PokemonCardGrid cards={cards} />
     </div>

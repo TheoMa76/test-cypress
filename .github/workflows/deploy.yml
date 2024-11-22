@@ -24,25 +24,14 @@ jobs:
       - name: Update known_hosts
         run: ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      # Étape 4 : Build le projet Vite
-      - name: Install dependencies and build project
-        run: |
-          npm install
-          npm run build
-
-      # Étape 5 : Créer le répertoire distant
+      # Étape 4 : Créer le répertoire distant
       - name: Create remote directory
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p /tmp/deploy/"
 
-      # Étape 6 : Envoyer les fichiers générés
+      # Étape 5 : Envoyer les fichiers générés
       - name: Upload files to server
         run: scp -r dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/tmp/deploy/
 
-      # Étape 7 : Déployer les fichiers au bon endroit
-      - name: Move files to the correct location
-        run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-            sudo mv /tmp/deploy/* /var/www/pokemon/
-            sudo systemctl reload nginx
-          EOF
+    - name: Move files to the correct location
+      run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "sudo mv /tmp/deploy/* /var/www/html/pokemon/"

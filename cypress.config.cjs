@@ -2,8 +2,21 @@ const { defineConfig } = require("cypress");
 const execa = require("execa");
 const findBrowser = async () => {
   // the path is hard-coded for simplicity
-  const browserPath =
+  let browserPath =
     "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe";
+  if(process.env.CI){
+    browserPath = "/usr/bin/google-chrome";
+    return {
+      name: "Chrome",
+      video: true,
+      videosFolder: "cypress/videos",
+      channel: "stable",
+      family: "chromium",
+      displayName: "Chrome",
+      version: "stable",
+      path: browserPath
+    }
+  }
 
   const result = await execa(browserPath, ["--version"]);
   // STDOUT will be like "Brave Browser 77.0.69.135"

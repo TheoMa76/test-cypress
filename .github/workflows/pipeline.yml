@@ -11,28 +11,75 @@ jobs:
 
     steps:
 
+    # 0. Set environment variables
+    - name: Set environment variables
+      run: |
+        echo "CI=true" >> $GITHUB_ENV
+        echo "NODE_ENV=dev" >> $GITHUB_ENV
+        echo "PORT=5173" >> $GITHUB_ENV
+        echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> $GITHUB_ENV
+        echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> $GITHUB_ENV
+        echo "VITE_API_LIMIT=${{ secrets.VITE_API_LIMIT }}" >> $GITHUB_ENV
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
+
+    # 1. Message pour notifier le déclenchement de l'action
     - name: message
       run: echo "A push event has been triggered!"
 
+    # 2. Checkout du dépôt
     - name: checkout repo
       uses: actions/checkout@v4
 
+    # 3. Installation de Node.js
     - name : installation node
       uses: actions/setup-node@v4
-      with:
-        cache: 'npm'
 
+    # 4. Installation des dépendances
     - name: clean install
       run: npm ci
 
+    # 5. Vérification Prettier
     - name: prettier check
       run: npx prettier . --check
 
+    # 6. Linter (ESLint)
     - name: lint
       run: npm run lint
 
+    # 7. Vérification des types avec TypeScript
     - name: type check
       run: npx tsc --noEmit
 
+    # 8. Build du projet
     - name: build
       run: npm run build
+
+    # 9. Run le projet
+    - name: run in background
+      run: npm run dev &
+
+    # 10. Wait for the server to start
+    - name: wait for server
+      run: npx wait-on http://localhost:5173
+
+    # 11. Exécution des tests Cypress
+    - name: Run Cypress tests
+      uses: cypress-io/github-action@v6
+      with:
+        browser: chrome
+
+    # 12. Enregistrement des artefacts Cypress - Screenshots (en cas d'échec)
+    - name: Upload Cypress Screenshots
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: cypress-screenshots
+        path: cypress/screenshots
+        if-no-files-found: ignore
+
+    # 13. Enregistrement des artefacts Cypress - Vidéos
+    - name: Upload Cypress Videos
+      uses: actions/upload-artifact@v4
+      with:
+        name: cypress-videos
+        path: cypress/videos

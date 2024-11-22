@@ -1,4 +1,4 @@
-name: Exercice 1
+name: Exo
 
 on: 
   push:
@@ -19,6 +19,8 @@ jobs:
 
     - name : installation node
       uses: actions/setup-node@v4
+      with:
+        cache: 'npm'
 
     - name: clean install
       run: npm ci

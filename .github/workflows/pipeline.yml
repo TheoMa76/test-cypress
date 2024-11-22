@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+    - name: message
+      run: echo "A push event has been triggered!"
+
     - name: checkout repo
       uses: actions/checkout@v4
 
@@ -25,5 +29,8 @@ jobs:
     - name: lint
       run: npm run lint
 
-    - name: message
-      run: echo "A push event has been triggered!"
+    - name: type check
+      run: npx tsc --noEmit
+
+    - name: build
+      run: npm run build

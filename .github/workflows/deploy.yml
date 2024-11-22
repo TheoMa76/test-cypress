@@ -56,8 +56,8 @@ jobs:
       - name: add env api url
         run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'VITE_API_URL=${{ secrets.VITE_API_URL }}' >> .env"
         
-        -name: add env api key
+      - name: add env api key
         run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'VITE_API_KEY=${{ secrets.VITE_API_KEY }}' >> .env"
        
-       -name: add env api limit
+      - name: add env api limit
         run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'VITE_API_LIMIT=${{ secrets.VITE_API_LIMIT }}' >> .env"

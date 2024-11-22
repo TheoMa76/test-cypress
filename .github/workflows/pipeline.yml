@@ -47,6 +47,10 @@ jobs:
     - name: run in background
       run: npm run dev &
 
+      # 10. Wait for the server to start
+      - name: wait for server
+        run: npx wait-on http://localhost:5173
+
     # 9. Exécution des tests Cypress
     - name: Run Cypress tests
       uses: cypress-io/github-action@v6

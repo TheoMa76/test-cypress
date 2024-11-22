@@ -29,9 +29,15 @@ jobs:
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p /tmp/deploy/"
 
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
       # Étape 5 : Envoyer les fichiers générés
       - name: Upload files to server
         run: scp -r dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/tmp/deploy/
 
       - name: Move files to the correct location
-        run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "sudo mv /tmp/deploy/* /var/www/html/pokemon/"
+        run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "sudo mv /tmp/deploy/* /var/www/html/pokemon"

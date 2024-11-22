@@ -20,6 +20,7 @@ jobs:
         echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> $GITHUB_ENV
         echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> $GITHUB_ENV
         echo "VITE_API_LIMIT=${{ secrets.VITE_API_LIMIT }}" >> $GITHUB_ENV
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> $GITHUB_ENV
 
     # 1. Message pour notifier le déclenchement de l'action
     - name: message

@@ -39,5 +39,21 @@ jobs:
       - name: Upload files to server
         run: scp -r dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/tmp/deploy/
 
+      # Étape 6 : Déplacer les fichiers
       - name: Move files to the correct location
         run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "sudo mv /tmp/deploy/* /var/www/html/pokemon"
+
+      # Étape 7 : Créer le fichier .env
+      - name: go in directory
+        run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd /var/www/html/pokemon"
+
+      - name: create environment file
+        run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'NODE_ENV=dev' > .env"
+
+      - name: nano file
+        run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "nano .env"
+
+      - name: add env
+        run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'VITE_API_URL=${{ secrets.VITE_API_URL }}' >> .env"
+        run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'VITE_API_KEY=${{ secrets.VITE_API_KEY }}' >> .env"
+        run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'VITE_API_LIMIT=${{ secrets.VITE_API_LIMIT }}' >> .env"

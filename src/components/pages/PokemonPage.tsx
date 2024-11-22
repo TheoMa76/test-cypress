@@ -19,13 +19,15 @@ const PokemonPage: React.FC = () => {
     const loadCards = async () => {
       try {
         const data = await fetchPokemonCards();
-        const formattedCards = data.cards.map((card: {id: string,name: string, image: string}) => ({
-          id: card.id,
-          name: card.name,
-          image: card.image,
-        }));
+        const formattedCards = data.cards.map(
+          (card: { id: string; name: string; image: string }) => ({
+            id: card.id,
+            name: card.name,
+            image: card.image,
+          }),
+        );
         setCards(formattedCards);
-      }catch (err: unknown) {
+      } catch (err: unknown) {
         if (err instanceof Error) {
           console.error(err.message);
           setError(err.message);
@@ -47,11 +49,13 @@ const PokemonPage: React.FC = () => {
     if (query) {
       try {
         const data = await fetchPokemonCards(query);
-        const formattedCards = data.cards.map((card: {id: string,name: string, image: string}) => ({
-          id: card.id,
-          name: card.name,
-          image: card.image,
-        }));
+        const formattedCards = data.cards.map(
+          (card: { id: string; name: string; image: string }) => ({
+            id: card.id,
+            name: card.name,
+            image: card.image,
+          }),
+        );
         setCards(formattedCards);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -64,11 +68,13 @@ const PokemonPage: React.FC = () => {
       }
     } else {
       const data = await fetchPokemonCards();
-      const formattedCards = data.cards.map((card: {id: string,name: string, image: string}) => ({
-        id: card.id,
-        name: card.name,
-        image: card.image,
-      }));
+      const formattedCards = data.cards.map(
+        (card: { id: string; name: string; image: string }) => ({
+          id: card.id,
+          name: card.name,
+          image: card.image,
+        }),
+      );
       setCards(formattedCards);
     }
   };

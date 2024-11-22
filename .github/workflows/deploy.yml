@@ -42,6 +42,9 @@ jobs:
       - name: delete if exists
         run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "sudo rm -rf /var/www/html/pokemon"
 
+      - name: create directory
+        run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "sudo mkdir -p /var/www/html/pokemon"
+
       # Étape 6 : Déplacer les fichiers
       - name: Move files to the correct location
         run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "sudo mv /tmp/deploy/* /var/www/html/pokemon"

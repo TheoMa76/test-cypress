@@ -18,11 +18,11 @@ jobs:
       - name: Configure SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # Étape 3 : Mettre à jour known_hosts
       - name: Update known_hosts
-        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+        run: ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
       # Étape 4 : Build le projet Vite
       - name: Install dependencies and build project
@@ -32,12 +32,12 @@ jobs:
 
       # Étape 5 : Envoyer les fichiers générés
       - name: Upload files to server
-        run: scp -r dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/deploy/
+        run: scp -r dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/tmp/deploy/
       
       # Étape 6 : Déployer les fichiers au bon endroit
       - name: Move files to the correct location
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            sudo mv /tmp/deploy/* /var/www/your-subdomain/
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            sudo mv /tmp/deploy/* /var/www/pokemon/
             sudo systemctl reload nginx
           EOF

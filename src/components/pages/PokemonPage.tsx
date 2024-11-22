@@ -25,11 +25,14 @@ const PokemonPage: React.FC = () => {
           image: card.image,
         }));
         setCards(formattedCards);
-      } catch (err: any) {
-        setError(
-          err.message ||
-            "Une erreur est survenue lors de la récupération des cartes.",
-        );
+      }catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error(err.message);
+          setError(err.message);
+        } else {
+          console.error("An unknown error occurred");
+          setError("An unknown error occurred");
+        }
       } finally {
         setLoading(false);
       }
@@ -52,11 +55,9 @@ const PokemonPage: React.FC = () => {
         setCards(formattedCards);
       } catch (err: unknown) {
         if (err instanceof Error) {
-          // Handle the error, e.g., log it or display a user-friendly message
           console.error(err.message);
           setError(err.message);
         } else {
-          // Handle non-Error objects if applicable
           console.error("An unknown error occurred");
           setError("An unknown error occurred");
         }

@@ -36,6 +36,7 @@ const findBrowser = async () => {
   };
 };
 module.exports = defineConfig({
+  projectId: "testing-ci-cd-cypress",
   e2e: {
     async setupNodeEvents(on, config) {
       const browser = await findBrowser();

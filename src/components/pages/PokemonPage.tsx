@@ -19,7 +19,7 @@ const PokemonPage: React.FC = () => {
     const loadCards = async () => {
       try {
         const data = await fetchPokemonCards();
-        const formattedCards = data.cards.map((card: any) => ({
+        const formattedCards = data.cards.map((card: {id: string,name: string, image: string}) => ({
           id: card.id,
           name: card.name,
           image: card.image,
@@ -44,18 +44,26 @@ const PokemonPage: React.FC = () => {
     if (query) {
       try {
         const data = await fetchPokemonCards(query);
-        const formattedCards = data.cards.map((card: any) => ({
+        const formattedCards = data.cards.map((card: {id: string,name: string, image: string}) => ({
           id: card.id,
           name: card.name,
           image: card.image,
         }));
         setCards(formattedCards);
-      } catch (err: any) {
-        setError(err.message || "Erreur lors de la recherche.");
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          // Handle the error, e.g., log it or display a user-friendly message
+          console.error(err.message);
+          setError(err.message);
+        } else {
+          // Handle non-Error objects if applicable
+          console.error("An unknown error occurred");
+          setError("An unknown error occurred");
+        }
       }
     } else {
       const data = await fetchPokemonCards();
-      const formattedCards = data.cards.map((card: any) => ({
+      const formattedCards = data.cards.map((card: {id: string,name: string, image: string}) => ({
         id: card.id,
         name: card.name,
         image: card.image,

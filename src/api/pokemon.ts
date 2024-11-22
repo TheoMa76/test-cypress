@@ -51,7 +51,7 @@ export async function fetchPokemonCards(
     count: data.count,
     pageSize: data.pageSize,
     page: data.page,
-    cards: data.data.map((card: any) => ({
+    cards: data.data.map((card: { id: string; name: string; images?: { small: string } }) => ({
       id: card.id,
       name: card.name,
       image: card.images?.small ?? defaultImage,

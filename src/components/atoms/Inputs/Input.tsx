@@ -11,7 +11,7 @@ interface Props {
 const Input: React.FC<Props> = ({
   placeholder,
   value,
-    onSubmit,
+  onSubmit,
   onChange,
   ide,
 }) => {

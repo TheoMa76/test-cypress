@@ -61,14 +61,14 @@ jobs:
     - name: wait for server
       run: npx wait-on http://localhost:5173
 
-    # 9. Exécution des tests Cypress
+    # 11. Exécution des tests Cypress
     - name: Run Cypress tests
       uses: cypress-io/github-action@v6
       with:
         browser: chrome
-        record: false # Si vous n'utilisez pas le Dashboard Cypress
+        record: true # Si vous n'utilisez pas le Dashboard Cypress
 
-    # 10. Enregistrement des artefacts Cypress - Screenshots (en cas d'échec)
+    # 12. Enregistrement des artefacts Cypress - Screenshots (en cas d'échec)
     - name: Upload Cypress Screenshots
       uses: actions/upload-artifact@v4
       if: failure()
@@ -77,7 +77,7 @@ jobs:
         path: cypress/screenshots
         if-no-files-found: ignore # Ignore si aucun fichier n'est trouvé
 
-    # 11. Enregistrement des artefacts Cypress - Vidéos
+    # 13. Enregistrement des artefacts Cypress - Vidéos
     - name: Upload Cypress Videos
       uses: actions/upload-artifact@v4
       with:

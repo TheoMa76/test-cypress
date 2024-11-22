@@ -6,7 +6,7 @@ on:
       - '**'
 
 jobs:
-  display-message:
+  test-for-production:
     runs-on: ubuntu-latest
 
     steps:

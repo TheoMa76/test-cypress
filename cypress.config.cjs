@@ -11,6 +11,8 @@ const findBrowser = async () => {
   // const majorVersion = parseInt(version.split('.')[0]);
   return {
     name: "Brave",
+    video: true,
+    videosFolder: "cypress/videos",
     channel: "stable",
     family: "chromium",
     displayName: "Brave",

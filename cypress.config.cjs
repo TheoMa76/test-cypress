@@ -15,6 +15,7 @@ const findBrowser = async () => {
       displayName: "Chrome",
       version: "stable",
       path: browserPath,
+      majorVersion: "stable",
     };
   }
 

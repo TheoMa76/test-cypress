@@ -1,0 +1,43 @@
+name: Deploy Vite Project
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Récupérer le code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Étape 2 : Configurer SSH Agent
+      - name: Configure SSH Agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+
+      # Étape 3 : Mettre à jour known_hosts
+      - name: Update known_hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # Étape 4 : Build le projet Vite
+      - name: Install dependencies and build project
+        run: |
+          npm install
+          npm run build
+
+      # Étape 5 : Envoyer les fichiers générés
+      - name: Upload files to server
+        run: scp -r dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/deploy/
+      
+      # Étape 6 : Déployer les fichiers au bon endroit
+      - name: Move files to the correct location
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            sudo mv /tmp/deploy/* /var/www/your-subdomain/
+            sudo systemctl reload nginx
+          EOF

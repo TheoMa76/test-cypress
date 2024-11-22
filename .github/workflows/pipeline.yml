@@ -10,11 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: checkout repo
+      uses: actions/checkout@v4
 
     - name : installation node
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
 
-    - name: Affiche un message
+    - name: clean install
+      run: npm ci
+
+    - name: prettier check
+      run: npx prettier . --check
+
+    - name: lint
+      run: npm run lint
+
+    - name: message
       run: echo "A push event has been triggered!"

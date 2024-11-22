@@ -37,5 +37,8 @@ jobs:
     - name: build
       run: npm run build
 
+    - name: launch web server with port 5173
+      run: npx http-server -p 5173 ./dist
+
     - name: Cypress run
       uses: cypress-io/github-action@v6

@@ -10,13 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      env:
-        CI: true
-        NODE_ENV: production
-        PORT: 5173
-        VITE_API_URL: ${{ secrets.VITE_API_URL }}
-        VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
-        VITE_API_LIMIT: ${{ secrets.VITE_API_LIMIT }}
+      - name: Set environment variables
+        run: |
+          echo "CI=true" >> $GITHUB_ENV
+          echo "NODE_ENV=production" >> $GITHUB_ENV
+          echo "PORT=5173" >> $GITHUB_ENV
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> $GITHUB_ENV
+          echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> $GITHUB_ENV
+          echo "VITE_API_LIMIT=${{ secrets.VITE_API_LIMIT }}" >> $GITHUB_ENV
 
     # 1. Message pour notifier le déclenchement de l'action
     - name: message

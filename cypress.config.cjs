@@ -4,7 +4,7 @@ const findBrowser = async () => {
   // the path is hard-coded for simplicity
   let browserPath =
     "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe";
-  if(process.env.CI){
+  if (process.env.CI) {
     browserPath = "/usr/bin/google-chrome";
     return {
       name: "Chrome",
@@ -14,8 +14,8 @@ const findBrowser = async () => {
       family: "chromium",
       displayName: "Chrome",
       version: "stable",
-      path: browserPath
-    }
+      path: browserPath,
+    };
   }
 
   const result = await execa(browserPath, ["--version"]);
